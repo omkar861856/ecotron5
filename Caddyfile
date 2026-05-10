@@ -1,0 +1,16 @@
+ecotron.co.in, www.ecotron.co.in {
+    reverse_proxy app:3000
+    
+    # Optional: Gzip compression
+    encode gzip
+    
+    # Optional: Log configuration
+    log {
+        output file /data/access.log
+    }
+}
+
+# Optional: MinIO Console exposure (on a subdomain if desired)
+# storage.ecotron.co.in {
+#     reverse_proxy minio:9001
+# }

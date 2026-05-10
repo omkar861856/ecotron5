@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: ecotron-mongodb
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    networks:
+      - ecotron-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: ecotron-minio
+    ports:
+      - "9010:9000"
+      - "9011:9001"
+    volumes:
+      - minio_data:/data
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    command: server /data --console-address ":9001"
+    networks:
+      - ecotron-network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ecotron-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - ecotron-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: ecotron-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./next.config.mjs:/app/next.config.mjs
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./tsconfig.json:/app/tsconfig.json
+    environment:
+      - MONGODB_URI=mongodb://admin:password@mongodb:27017/ecotron?authSource=admin
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      - mongodb
+      - minio
+      - ollama
+    networks:
+      - ecotron-network
+
+networks:
+  ecotron-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  minio_data:
+  ollama_data:

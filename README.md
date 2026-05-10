@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ecotron Platform - ad landing v1
+
+Modern Next.js landing page with integrated ad inventory, secure AI infrastructure (Ollama), MongoDB, and MinIO storage.
+
+## Tech Stack
+- **Frontend**: Next.js 14, Vanilla CSS (Premium Glassmorphism)
+- **Database**: MongoDB
+- **Storage**: MinIO (S3 Compatible)
+- **AI**: Ollama (Running local Phi3)
+- **Infrastructure**: Docker Compose
+- **Auth**: NextAuth.js
 
 ## Getting Started
 
-First, run the development server:
-
+### 1. Start Infrastructure
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker-compose up -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Pull AI Model
+```bash
+docker exec -it ecotron-ollama ollama pull phi3
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run Development Server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Ad Inventory Integration
+The following placements are active:
+- **Left Sidebar**: Banner 160x600 (`419b347d315cd1215c1db06b7db000a5`)
+- **Right Sidebar**: Banner 300x250 (`eca2cd8a7fd561c8d9ddc9b4e1302ac9`)
+- **Center Content**: Native Banner 4:1 (`bc5972dfd55ab0a5e10b6ee43572241a`)
+- **Footer**: Banner 728x90 (`c25ecd0c0fe9d93f6cf66f0016cbd198`)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Secure Access
+Default credentials:
+- **Username**: `admin`
+- **Password**: `password`

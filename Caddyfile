@@ -1,14 +1,30 @@
 ecotron.co.in, www.ecotron.co.in {
-    # Use internal self-signed certs to work with Cloudflare Proxy in 'Full' mode
-    tls internal
+    # Replace with your real email to get a valid Let's Encrypt certificate
+    tls omkardlolge@gmail.com
     
     reverse_proxy app:3000
-    
-    # Enable Gzip compression
     encode gzip
-    
-    # Log configuration
     log {
         output file /data/access.log
+    }
+}
+
+trading.ecotron.co.in {
+    # Replace with your real email
+    tls omkardlolge@gmail.com
+    
+    # API Proxy
+    handle /analyze* {
+        reverse_proxy trading-api:8000
+    }
+
+    # Frontend Proxy
+    handle {
+        reverse_proxy trading-frontend:80
+    }
+
+    encode gzip
+    log {
+        output file /data/trading_access.log
     }
 }

@@ -1,18 +1,11 @@
 ecotron.co.in, www.ecotron.co.in {
-    # Using internal certs for Cloudflare "Full" mode
     tls internal
-    
     reverse_proxy app:3000
     encode gzip
-    log {
-        output file /data/access.log
-    }
 }
 
-trading.ecotron.co.in {
-    # Using internal certs for Cloudflare "Full" mode
-    tls internal
-    
+# Use HTTP for the internal connection (Cloudflare will handle HTTPS)
+http://trading.ecotron.co.in {
     # API Proxy
     handle /analyze* {
         reverse_proxy trading-api:8000
@@ -24,7 +17,4 @@ trading.ecotron.co.in {
     }
 
     encode gzip
-    log {
-        output file /data/trading_access.log
-    }
 }

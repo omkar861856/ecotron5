@@ -1,6 +1,6 @@
 ecotron.co.in, www.ecotron.co.in {
-    # Replace with your real email to get a valid Let's Encrypt certificate
-    tls omkardlolge@gmail.com
+    # Using internal certs for Cloudflare "Full" mode
+    tls internal
     
     reverse_proxy app:3000
     encode gzip
@@ -10,8 +10,8 @@ ecotron.co.in, www.ecotron.co.in {
 }
 
 trading.ecotron.co.in {
-    # Replace with your real email
-    tls omkardlolge@gmail.com
+    # Using internal certs for Cloudflare "Full" mode
+    tls internal
     
     # API Proxy
     handle /analyze* {

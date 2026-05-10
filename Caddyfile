@@ -1,16 +1,14 @@
 ecotron.co.in, www.ecotron.co.in {
+    # Use internal self-signed certs to work with Cloudflare Proxy in 'Full' mode
+    tls internal
+    
     reverse_proxy app:3000
     
-    # Optional: Gzip compression
+    # Enable Gzip compression
     encode gzip
     
-    # Optional: Log configuration
+    # Log configuration
     log {
         output file /data/access.log
     }
 }
-
-# Optional: MinIO Console exposure (on a subdomain if desired)
-# storage.ecotron.co.in {
-#     reverse_proxy minio:9001
-# }
